@@ -1,10 +1,10 @@
-# Rupaya Hot + Cold wallet MasterNode setup guide
+# Jiyo Hot + Cold wallet MasterNode setup guide
 
 > This is a community contributed guide. Feel free to suggest improvements via Issues or opening Pull Requests. Thank you!
 
 > The guide takes the time to explain not just _How_ but also _Why_ we do certain things. By using Linux for the hot wallet you'll have the opportunity to expand your knowledge into the open source, highly available and performat operating system that powers the Internet. I'll close this though with a quote by Benjamin Franklin: "An investment in knowledge pays the best interest"
 
-**!!! This guide is for setting up a new MasterNode using the new (dark theme) Rupaya v4 wallet and chain !!!**
+**!!! This guide is for setting up a new MasterNode using the new wallet and chain released in March 2018 !!!**
 
 ---
 
@@ -42,70 +42,53 @@ Requirements:
 You can get servers like this for $5 a month and can run 3,4 MasterNode wallets from different coins if the monthly cost is a concern.
 
 
-### 2. Login via SSH into the server and type the following command in the console as root:
+### 2. Login via SSH into the server to type some commands in the console as root:
 
 If you are using Windows, [PuTTY](https://putty.org) is a very good SSH client that you can use to connect to a remote Linux server.
 If you are running a VPS from Vultr or similar, you need to use SSH such as putty if you want to copy and paste these commands otherwise you will have to type them all out!
 
-Update and Install new packages by running the following commands in one go, one copy-paste:
-
-```
-apt-get update && \
-apt-get upgrade -y && \
-apt-get install wget nano unrar unzip libboost-all-dev libevent-dev software-properties-common -y && \
-add-apt-repository ppa:bitcoin/bitcoin -y && \
-apt-get update && \
-apt-get install libdb4.8-dev libdb4.8++-dev -y
-```
 
 ### 3. Configure swap to avoid running out of memory if you don't have a swap :
 
 ```
-fallocate -l 1500M /mnt/1500MB.swap
-dd if=/dev/zero of=/mnt/1500MB.swap bs=1024 count=1572864
-mkswap /mnt/1500MB.swap
-swapon /mnt/1500MB.swap
-chmod 600 /mnt/1500MB.swap
-echo '/mnt/1500MB.swap  none  swap  sw 0  0' >> /etc/fstab
+fallocate -l 3000M /mnt/3000MB.swap
+dd if=/dev/zero of=/mnt/3000MB.swap bs=1024 count=3072000
+mkswap /mnt/3000MB.swap
+swapon /mnt/3000MB.swap
+chmod 600 /mnt/3000MB.swap
+echo '/mnt/3000MB.swap  none  swap  sw 0  0' >> /etc/fstab
 ```
 
-### 4. Allow SSH and MasterNode p2p communication port through the OS firewall:
+### 4. Allow SSH and MasterNode p2p communication port through the OS firewall. On Ubuntu this is done like this:
 
 ```
 ufw allow 22/tcp
 ufw limit 22/tcp
-ufw allow 9020/tcp
+ufw allow 6080/tcp
 ufw logging on
 ufw --force enable
 ```
 
-If you are running the MasterNode server in Amazon AWS or if additional firewalls are in place, you need to allow incoming connections on port TCP **9020** from any IP address.
+If you are running the MasterNode server in Amazon AWS or if additional firewalls are in place, you need to allow incoming connections on port TCP **6080** from any IP address.
 
-### 5. Install the Rupaya CLI wallet. Always download the latest [release available](https://github.com/rupaya-project/rupaya/releases), unpack it
+### 5. Install the Jiyo CLI wallet. Always download the latest [release available](https://github.com/jiyocoin/jiyo-core/releases), unpack it
 
 
-For **Ubuntu 14.04**
+Download and unpack the Jiyo wallet binaries by running the following commands:
 
 ```
-apt-get install libzmq3 libminiupnpc-dev -y
-wget https://github.com/rupaya-project/rupaya/releases/download/v4.0.0.0/rupaya-4.0.0-ubuntu14.04.zip
-unzip rupaya-4.0.0-ubuntu14.04.zip
-rm rupaya-4.0.0-ubuntu14.04.zip
-mv rupaya-cli rupayad /usr/local/bin/
-rupayad
+wget http://wallets.mn.zone/jiyo-1.2.1-x86_64-linux.tar.gz
+tar -xzvf jiyo-1.2.1-x86_64-linux.tar.gz
+jiyod
 ```
 
-For **Ubuntu 16.04***
+You'll get a start error like `Error: To use jiyod, or the -server option to jiyo-qt, you must set an rpcpassword in the configuration file`. It's expected because we haven't created the config file yet.
 
-**COMING SOON**
-
-You'll get a start error like `Error: To use rupayad, or the -server option to rupaya-qt, you must set an rpcpassword in the configuration file`. It's expected because we haven't created the config file yet.
-
-The service will only start for a second and create the initial data directory(`/root/.rupaya/`).
+The service will only start for a second and create the initial data directory(`/root/.jiyo/`).
 
 ### 6. Edit the MasterNode main wallet configuration file:
 ```
-nano /root/.rupaya/rupaya.conf
+nano /root/.jiyo/jiyo.conf
 ```
 
 Enter this wallet configuration data and change accordingly:
@@ -143,12 +126,12 @@ The IP address (`199.247.10.25` in this example) will be different for you. Use 
 
 ### 7. Start the service and let's obtain the value for `masternodeprivkey`:
 ```
-rupayad
+jiyod
 ```
 
 Wait a few seconds then run this command to generate the masternode private key:
 ```
-rupaya-cli masternode genkey
+jiyoa-cli masternode genkey
 ```
 
 Copy to your clipboard the value returned, similar to this:
@@ -158,10 +141,10 @@ Copy to your clipboard the value returned, similar to this:
 
 Edit the configuration file again: 
 ```
-nano /root/.rupaya/rupaya.conf
+nano /root/.jiyo/jiyo.conf
 ```
 
-Add these two lines at the end of the file. The second line is taking the value you received from the `rupaya-cli masternode genkey` command:
+Add these two lines at the end of the file. The second line is taking the value you received from the `jiyo-cli masternode genkey` command:
 ```
 masternode=1
 masternodeprivkey=<your_masternode_genkey_output>
@@ -179,14 +162,14 @@ Exit the editor by CTRL+X and hit Y + ENTER to commit your changes.
 
 Stop the wallet and wait 2 minutes before attempting a start:
 ```
-rupaya-cli stop && sleep 120
-rupayad
+jiyo-cli stop && sleep 120
+jiyod
 ```
 
 ### 8. Verify that the wallet is synching the blockchain:
 Run this command every few mins until you see the blocks increasing.
 ```
-rupaya-cli getinfo
+jiyo-cli getinfo
 ``` 
 We can now go to the next step while this wallet syncs up with the network and gets social with the other MasterNodes.
 
@@ -202,10 +185,10 @@ Requirements:
 
 This is the wallet where the MasterNode collateral will have to be transferred and stored. After the setup is complete, this wallet doesn't have to run 24/7 and will be the one receiving the rewards.
 
-### 1. Install and open the Rupaya-Qt wallet on your machine.
+### 1. Install and open the Jiyo-Qt wallet on your machine.
 
- * If you have a previous Rupaya wallet installed, backup the `wallet.dat`, uninstall it then delete its original data directory.
- * Download the newest Rupaya Qt wallet from: https://github.com/rupaya-project/rupaya/releases
+ * If you have a previous Jiyo wallet installed, backup the `wallet.dat`, uninstall it then delete its original data directory.
+ * Download the newest Jiyo Qt wallet from: https://github.com/jiyocoin/jiyo-core/releases
  * The Windows wallet needs to be extracted to a permanent location, OSX Wallet goes into `Applications`
  * Start the wallet software and ignore the unidentified developer warning.
  * If you are prompted to Allow Access by the firewall, do so.
@@ -251,8 +234,8 @@ Go to `Tools` -> `Debug console`
 If you get prompted to choose a program, select a text editor like Notepad/TextEdit to open it.
 
 These are the default directories for the data directory where this file is stored:
- * Mac: `~/Library/Application Support/Rupaya`
- * Windows: `~\AppData\Roaming\Rupaya`
+ * Mac: `~/Library/Application Support/Jiyo`
+ * Windows: `~\AppData\Roaming\Jiyo`
 
 This is an example of what you need in `masternode.conf`.
 
@@ -263,7 +246,7 @@ MN1 199.247.10.25:9020 87LBTcfgkepEddWNFrJcut76rFp9wQG6rgbqPhqHWGvy13A9hJK c1997
 
 Where `199.247.10.25` is the external IP of the masternode server that will provide services to the network.
 
-Where `87LBTcfgkepEddWNFrJcut76rFp9wQG6rgbqPhqHWGvy13A9hJK` is your masternode key from (Part 1), the value used for `masternodeprivkey` in `/root/.rupaya/rupaya.conf`.
+Where `87LBTcfgkepEddWNFrJcut76rFp9wQG6rgbqPhqHWGvy13A9hJK` is your masternode key from (Part 1), the value used for `masternodeprivkey` in `/root/.jiyo/jiyo.conf`.
 
 Where `c19972e47d2a77d3ff23c2dbd8b2b204f9a64a46fed0608ce57cf76ba9216487` is your txhash from `masternode outputs`.
 
@@ -300,12 +283,12 @@ Alternatively, if the `startmasternode` command is not working, you can go to th
 Switch back to the MasterNode console.
 Give it a few minutes and go to the Linux VPS console and check the status of the masternode with this command:
 ```
-rupaya-cli masternode status
+jiyo-cli masternode status
 ```
 
 If you see status `Masternode successfully started`, you've done it, congratulations. Go hug someone now :)
 It will take a few hours until the first rewards start coming in.
 
-You should now be able to see your MasterNode(s) **ENABLED** on this web page: [http://rupx.mn.zone](http://rupx.mn.zone)
+You should now be able to see your MasterNode(s) **ENABLED** on this web page: [http://jiyo.mn.zone](http://jiyo.mn.zone)
 
 Cheers !
