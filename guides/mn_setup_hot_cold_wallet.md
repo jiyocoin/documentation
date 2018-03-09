@@ -18,7 +18,7 @@ That's why we are running it with a balance of 0 coins.
 It's strongly recommended not to run a MasterNode Hot wallet at home! See a list of reasons [here](mn_dont_do_this_at_home.md).
 
 ### Cold Wallet
-On the other side, the **Cold** wallet (Windows, OSX, Linux) holds the RUPX collateral (**20,000** JIYO) and is used to enable the MasterNode server and collect rewards for its services.
+On the other side, the **Cold** wallet (Windows, OSX, Linux) holds the Jiyo collateral (**20,000** JIYO coins) and is used to enable the MasterNode server and collect rewards for its services.
 
 This is normally run at home, behind firewall, without direct connectivity from the internet, making it a more secure wallet. Once the MasterNode is enabled. The local wallet can then be stopped and MasterNode rewards will still show up on the next wallet start and sync.
 
@@ -122,7 +122,7 @@ externalip=199.247.10.25:6080
 masternodeaddr=199.247.10.25:6080
 ```
 
-The IP address (`199.247.10.25` in this example) will be different for you. Use the `ifconfig` command to find out your IP address, normally the address of the `eth0` interface. We are going to use this IP and port (9020) in the Cold Wallet setup(Step 2) as well.
+The IP address (`199.247.10.25` in this example) will be different for you. Use the `ifconfig` command to find out your IP address, normally the address of the `eth0` interface. We are going to use this IP and port (6080) in the Cold Wallet setup(Step 2) as well.
 
 ### 7. Start the service and let's obtain the value for `masternodeprivkey`:
 ```
@@ -205,9 +205,9 @@ This is the wallet where the MasterNode collateral will have to be transferred a
 
 Select the row of the newly added address and click **Copy** to store the destination address in the clipboard.
 
-### 3. Send EXACTLY 10000 RUPX coins to the address you just copied. Double check you've got the correct address before transferring the funds.
-If you are sending from an exchange, make sure you account for the withdrawal fee so that you get EXACTLY EXACTLY EXACTLY 10000 RUPX in. This is a common error that will cause the next step to not give you the transaction id needed later on. 
-For example, to withdraw from `Stocks.Exchange` the exact ammount for a MasterNode, you need to specify the ammount of **10000.001** to account for the fee.
+### 3. Send EXACTLY 20000 JIYO coins to the address you just copied. Double check you've got the correct address before transferring the funds.
+If you are sending from an exchange, make sure you account for the withdrawal fee so that you get EXACTLY EXACTLY EXACTLY 20000 JIYO in. This is a common error that will cause the next step to not give you the transaction id needed later on. 
+For example, to withdraw from `Stocks.Exchange` the exact ammount for a MasterNode, you need to specify the ammount of **20000.001** to account for the fee.
 
 After sending, you can verify the balance in the Transactions tab. This can take **a few minutes** to be confirmed by the network. Go get a glass of water. No alcoholic beverages please, we are not out of the woods yet.
 
@@ -241,7 +241,7 @@ This is an example of what you need in `masternode.conf`.
 
 The file will contain an example that is commented out(with a # in front). Read it if it helps. Based on the above values, I would add this line in:
 ```
-MN1 199.247.10.25:9020 87LBTcfgkepEddWNFrJcut76rFp9wQG6rgbqPhqHWGvy13A9hJK c19972e47d2a77d3ff23c2dbd8b2b204f9a64a46fed0608ce57cf76ba9216487 1
+MN1 199.247.10.25:6080 87LBTcfgkepEddWNFrJcut76rFp9wQG6rgbqPhqHWGvy13A9hJK c19972e47d2a77d3ff23c2dbd8b2b204f9a64a46fed0608ce57cf76ba9216487 1
 ```
 
 Where `199.247.10.25` is the external IP of the masternode server that will provide services to the network.
