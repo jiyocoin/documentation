@@ -1,4 +1,4 @@
-## Rupaya Open Source Documentation
+## Jiyo Open Source Documentation
 
 Here are the currently available guides:
 
@@ -7,4 +7,4 @@ Here are the currently available guides:
 
 ----
 
-If you contribute to this repository, please leave your Rupaya address so that we can thank you for your help.
+Contributions to this repository are welcomed.
