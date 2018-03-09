@@ -29,12 +29,12 @@ We are going to setup the Hot wallet first. This will reduce the overall time as
 
 ## **Hot** MasterNode VPS Setup(Part 1) with Linux CLI only wallet
 
-This will run 24/7 and provide services to the network via TCP port **9020** for which it will be rewarded with coins. It will run with an empty wallet reducing the risk of loosing the funds in the event of an attack.
+This will run 24/7 and provide services to the network via TCP port **6080** for which it will be rewarded with coins. It will run with an empty wallet reducing the risk of loosing the funds in the event of an attack.
 
 ### 1. Get a VPS server from a provider like Vultr, DigitalOcean, Linode, Amazon AWS, etc. 
 
 Requirements:
-* Ubuntu **14.04** or **16.04**(SOON) running on a server in the cloud 24/7. e.g: VPS such as Vultr, Amazon EC2 instance, Azure instance
+* Linux 64 bit, (e.g. Ubuntu **16.04**) running on a server in the cloud 24/7. e.g: VPS such as Vultr, Amazon EC2 instance, Azure instance
 * Dedicated Public IP Address
 * Recommended at least 1GB of RAM and 20GB of disk space
 * Basic Linux skills
@@ -101,8 +101,8 @@ rpcconnect=127.0.0.1
 rpcbind=127.0.0.1
 listen=1
 daemon=1
-externalip=<public_mn_ip_address_here>:9020
-masternodeaddr=<public_mn_ip_address_here>:9020
+externalip=<public_mn_ip_address_here>:6080
+masternodeaddr=<public_mn_ip_address_here>:6080
 ```
 You can right click in SSH (putty) to paste all of the above
 
@@ -110,7 +110,7 @@ Exit the editor by CTRL+X and hit Y + ENTER to commit your changes.
 
 This is a real example:
 ```
-rpcuser=rupxuser
+rpcuser=jiyouser
 rpcpassword=someSUPERsecurePASSWORD3746375620
 rpcport=7020
 rpcallowip=127.0.0.1
@@ -118,8 +118,8 @@ rpcconnect=127.0.0.1
 rpcbind=127.0.0.1
 listen=1
 daemon=1
-externalip=199.247.10.25:9020
-masternodeaddr=199.247.10.25:9020
+externalip=199.247.10.25:6080
+masternodeaddr=199.247.10.25:6080
 ```
 
 The IP address (`199.247.10.25` in this example) will be different for you. Use the `ifconfig` command to find out your IP address, normally the address of the `eth0` interface. We are going to use this IP and port (9020) in the Cold Wallet setup(Step 2) as well.
