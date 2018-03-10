@@ -12,7 +12,7 @@
 
 ### Hot Wallet
 In this guide, we refer to **Hot** wallet as the Rypaya wallet (Linux or Windows) that is running on the MasterNode server, with public IP address on it, providing services to the blockchain network for which it's rewarded with coins.
-It's **Hot** because it's out on the public internet 24/7, directly accessible on the peer-to-peer port (TCP **6081**), much more vulnerable than a **Cold** wallet. 
+It's **Hot** because it's out on the public internet 24/7, directly accessible on the peer-to-peer port (TCP **6080**), much more vulnerable than a **Cold** wallet. 
 That's why we are running it with a balance of 0 coins.
 
 It's strongly recommended not to run a MasterNode Hot wallet at home! See a list of reasons [here](mn_dont_do_this_at_home.md).
@@ -29,7 +29,7 @@ We are going to setup the Hot wallet first. This will reduce the overall time as
 
 ## **Hot** MasterNode VPS Setup(Part 1) with Linux CLI only wallet
 
-This will run 24/7 and provide services to the network via TCP port **6081** for which it will be rewarded with coins. It will run with an empty wallet reducing the risk of loosing the funds in the event of an attack.
+This will run 24/7 and provide services to the network via TCP port **6080** for which it will be rewarded with coins. It will run with an empty wallet reducing the risk of loosing the funds in the event of an attack.
 
 ### 1. Get a VPS server from a provider like Vultr, DigitalOcean, Linode, Amazon AWS, etc. 
 
@@ -64,12 +64,12 @@ echo '/mnt/3000MB.swap  none  swap  sw 0  0' >> /etc/fstab
 ```
 ufw allow 22/tcp
 ufw limit 22/tcp
-ufw allow 6081/tcp
+ufw allow 6080/tcp
 ufw logging on
 ufw --force enable
 ```
 
-If you are running the MasterNode server in Amazon AWS or if additional firewalls are in place, you need to allow incoming connections on port TCP **6081** from any IP address.
+If you are running the MasterNode server in Amazon AWS or if additional firewalls are in place, you need to allow incoming connections on port TCP **6080** from any IP address.
 
 ### 5. Install the Jiyo CLI wallet. Always download the latest [release available](https://github.com/jiyocoin/jiyo-core/releases), unpack it
 
@@ -101,8 +101,8 @@ rpcconnect=127.0.0.1
 rpcbind=127.0.0.1
 listen=1
 daemon=1
-externalip=<public_mn_ip_address_here>:6081
-masternodeaddr=<public_mn_ip_address_here>:6081
+externalip=<public_mn_ip_address_here>:6080
+masternodeaddr=<public_mn_ip_address_here>:6080
 ```
 You can right click in SSH (putty) to paste all of the above
 
@@ -118,11 +118,11 @@ rpcconnect=127.0.0.1
 rpcbind=127.0.0.1
 listen=1
 daemon=1
-externalip=199.247.10.25:6081
-masternodeaddr=199.247.10.25:6081
+externalip=199.247.10.25:6080
+masternodeaddr=199.247.10.25:6080
 ```
 
-The IP address (`199.247.10.25` in this example) will be different for you. Use the `ifconfig` command to find out your IP address, normally the address of the `eth0` interface. We are going to use this IP and port (6081) in the Cold Wallet setup(Step 2) as well.
+The IP address (`199.247.10.25` in this example) will be different for you. Use the `ifconfig` command to find out your IP address, normally the address of the `eth0` interface. We are going to use this IP and port (6080) in the Cold Wallet setup(Step 2) as well.
 
 ### 7. Start the service and let's obtain the value for `masternodeprivkey`:
 ```
@@ -241,7 +241,7 @@ This is an example of what you need in `masternode.conf`.
 
 The file will contain an example that is commented out(with a # in front). Read it if it helps. Based on the above values, I would add this line in:
 ```
-MN1 199.247.10.25:6081 87LBTcfgkepEddWNFrJcut76rFp9wQG6rgbqPhqHWGvy13A9hJK c19972e47d2a77d3ff23c2dbd8b2b204f9a64a46fed0608ce57cf76ba9216487 1
+MN1 199.247.10.25:6080 87LBTcfgkepEddWNFrJcut76rFp9wQG6rgbqPhqHWGvy13A9hJK c19972e47d2a77d3ff23c2dbd8b2b204f9a64a46fed0608ce57cf76ba9216487 1
 ```
 
 Where `199.247.10.25` is the external IP of the masternode server that will provide services to the network.
