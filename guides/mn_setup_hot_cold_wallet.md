@@ -95,7 +95,7 @@ Enter this wallet configuration data and change accordingly:
 ```
 rpcuser=<alphanumeric_rpc_username>
 rpcpassword=<alphanumeric_rpc_password>
-rpcport=7020
+rpcport=6080
 rpcallowip=127.0.0.1
 rpcconnect=127.0.0.1
 rpcbind=127.0.0.1
