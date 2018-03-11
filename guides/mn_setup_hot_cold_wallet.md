@@ -11,7 +11,7 @@
 ## Setup overview
 
 ### Hot Wallet
-In this guide, we refer to **Hot** wallet as the Rypaya wallet (Linux or Windows) that is running on the MasterNode server, with public IP address on it, providing services to the blockchain network for which it's rewarded with coins.
+In this guide, we refer to **Hot** wallet as the Jiyo wallet (Linux or Windows) that is running on the MasterNode server, with public IP address on it, providing services to the blockchain network for which it's rewarded with coins.
 It's **Hot** because it's out on the public internet 24/7, directly accessible on the peer-to-peer port (TCP **6080**), much more vulnerable than a **Cold** wallet. 
 That's why we are running it with a balance of 0 coins.
 
