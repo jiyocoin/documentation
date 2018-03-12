@@ -78,7 +78,7 @@ Download and unpack the Jiyo wallet binaries by running the following commands:
 
 ```
 wget http://wallets.mn.zone/jiyo-1.2.1-x86_64-linux.tar.gz
-tar -xzvf jiyo-1.2.1-x86_64-linux.tar.gz
+tar -xzvf jiyo-1.2.1-x86_64-linux.tar.gz -C /usr/local/bin/
 jiyod
 ```
 
