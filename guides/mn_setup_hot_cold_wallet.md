@@ -131,7 +131,7 @@ jiyod
 
 Wait a few seconds then run this command to generate the masternode private key:
 ```
-jiyoa-cli masternode genkey
+jiyo-cli masternode genkey
 ```
 
 Copy to your clipboard the value returned, similar to this:
